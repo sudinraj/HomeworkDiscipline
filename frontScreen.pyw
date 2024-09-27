@@ -15,8 +15,10 @@ app = QtWidgets.QApplication(sys.argv)
 app.setStyleSheet("QLabel{font-size: 18pt;}")
 windowMain = QtWidgets.QWidget()
 windowMain.setFixedSize(300, 300)
+windowMain.setWindowTitle("mom")
 windowAdd = QtWidgets.QWidget()
 windowAdd.setFixedSize(400, 300)
+windowAdd.setWindowTitle("mom")
 
 
 with open('games.json', 'r') as file:
@@ -36,7 +38,6 @@ def getProcess():
                 # decode() is necessary to get rid of the binary string (b')
                 # rstrip() to remove `\r\n`
                 if(line.decode().rstrip().lower() in games):
-                    print("mommmm")
                     reminder()
                 #print(line.decode().rstrip().lower())
         time.sleep(5)
@@ -46,13 +47,14 @@ thread = threading.Thread(target = getProcess, daemon = True)
 
 def start():
     windowMain.showMinimized()
+    labelMain.setText("Mom is watching you.")
     thread.start()
 
 #Main Laylout for main page
 layoutMain = QtWidgets.QVBoxLayout()
 labelMain = QLabel()
 labelMain.setText("Awaken your mom.")
-buttonStart = QtWidgets.QPushButton("Click to turn your mom on.")
+buttonStart = QtWidgets.QPushButton("Click to focus.")
 buttonStart.setStyleSheet("QPushButton::hover"
                              "{"
                              "background-color : lightgray;"
@@ -68,10 +70,11 @@ layoutMain.addWidget(labelMain)
 layoutMain.addWidget(buttonStart)
 layoutMain.addWidget(buttonChange)
 
+
 #Layout for AddGame Page
 layoutAdd = QtWidgets.QVBoxLayout()
 labelAdd = QLabel()
-labelAdd.setText("Name of the game:")
+labelAdd.setText("Find the name of the game in task\nmanager and enter here:")
 textBox = QtWidgets.QLineEdit()
 buttonAdd = QtWidgets.QPushButton("Add")
 buttonAdd.setStyleSheet("QPushButton::hover"
@@ -118,7 +121,8 @@ signal.signal(signal.sig, handler)"""
 def reminder():
     #sys.exit()
     dlg = QtWidgets.QMessageBox()
-    dlg.setFixedSize(100,100)
+    dlg.setWindowTitle("mom")
+    dlg.setGeometry(800, 400, 300, 300)
     dlg.setText("STOP PLAYING GAMES!!!")
     dlg.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
     dlg.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint | dlg.windowFlags() & QtCore.Qt.CustomizeWindowHint | dlg.windowFlags() & ~QtCore.Qt.WindowMinMaxButtonsHint)

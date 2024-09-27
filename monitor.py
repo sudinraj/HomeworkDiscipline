@@ -2,6 +2,8 @@ import subprocess
 import threading
 import time
 import json
+import signal
+#import frontScreen
 
 with open('games.json', 'r') as file:
     data = json.load(file)
@@ -20,6 +22,7 @@ def getProcess():
                 # rstrip() to remove `\r\n`
                 if(line.decode().rstrip().lower() in games):
                     print("mommmm")
+                    #frontScreen.changeToAdd()
                 #print(line.decode().rstrip().lower())
         time.sleep(5)
 

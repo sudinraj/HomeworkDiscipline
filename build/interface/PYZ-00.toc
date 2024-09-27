@@ -33,7 +33,7 @@
    'C:\\Users\\Sudin\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\_threading_local.py',
    'PYMODULE'),
   ('add_game',
-   'C:\\Users\\Sudin\\Desktop\\HomeworkDiscipline\\add_game.py',
+   'C:\\Users\\Sudin\\Desktop\\HomeworkDiscipline\\add_game.pyw',
    'PYMODULE'),
   ('argparse',
    'C:\\Users\\Sudin\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\argparse.py',

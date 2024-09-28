@@ -20,6 +20,7 @@ windowAdd = QtWidgets.QWidget()
 windowAdd.setFixedSize(400, 300)
 windowAdd.setWindowTitle("mom")
 
+video = False
 
 with open('games.json', 'r') as file:
     data = json.load(file)
@@ -30,8 +31,16 @@ with open('games.json', 'r') as file:
 #code for checking if a game is being run
 def getProcess():
     while True:
-        cmd = 'powershell "gps | where {$_.MainWindowTitle } | select Name'
+        cmd = 'powershell "gps | where {$_.MainWindowTitle } | select Name"'
+        cmd2 ="""powershell "gps | where {$_.MainWindowTitle -like '*Youtube*'}"""""
         proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+        if video:
+            proc2 = subprocess.Popen(cmd2, shell=True, stdout=subprocess.PIPE)
+            x = (len(proc2.stdout.read().decode().rstrip()))
+            if(x != 0):
+                reminder()
+                continue
+
         for line in proc.stdout:
             if line.rstrip():
                 # only print lines that are not empty
@@ -39,6 +48,7 @@ def getProcess():
                 # rstrip() to remove `\r\n`
                 if(line.decode().rstrip().lower() in games):
                     reminder()
+                    break
                 #print(line.decode().rstrip().lower())
         time.sleep(5)
 
@@ -46,16 +56,30 @@ def getProcess():
 thread = threading.Thread(target = getProcess, daemon = True)
 
 def start():
+    global video
+    video = False
     windowMain.showMinimized()
-    labelMain.setText("Mom is watching you.")
+    labelMain.setText("Mom is watching your games.")
+    thread.start()
+
+def startVideo():
+    global video
+    video = True
+    windowMain.showMinimized()
+    labelMain.setText("Mom is watching your games \nand YouTube.")
     thread.start()
 
 #Main Laylout for main page
 layoutMain = QtWidgets.QVBoxLayout()
 labelMain = QLabel()
 labelMain.setText("Awaken your mom.")
-buttonStart = QtWidgets.QPushButton("Click to focus.")
+buttonStart = QtWidgets.QPushButton("Click to monitor games.")
 buttonStart.setStyleSheet("QPushButton::hover"
+                             "{"
+                             "background-color : lightgray;"
+                             "}") 
+buttonVideo = QtWidgets.QPushButton("Click to monitor games and YouTube.")
+buttonVideo.setStyleSheet("QPushButton::hover"
                              "{"
                              "background-color : lightgray;"
                              "}") 
@@ -64,10 +88,13 @@ buttonChange.setStyleSheet("QPushButton::hover"
                              "{"
                              "background-color : lightgray;"
                              "}") 
+buttonStart.setToolTip("Mom will monitor if you are playing games")
+buttonVideo.setToolTip("Mom will monitor if you are playing games and watching YouTube\n(It will only check if you have YouTube open actively, \nso you can turn on music and switch to a different tab)")
 buttonChange.setToolTip("Click to add more games to the list of games your mom will detect")
 
 layoutMain.addWidget(labelMain)
 layoutMain.addWidget(buttonStart)
+layoutMain.addWidget(buttonVideo)
 layoutMain.addWidget(buttonChange)
 
 
@@ -140,6 +167,7 @@ buttonAdd.clicked.connect(addToList)
 buttonChange.clicked.connect(changeToAdd)
 buttonMain.clicked.connect(changeToMain)
 buttonStart.clicked.connect(start)
+buttonVideo.clicked.connect(startVideo)
 
 windowMain.setLayout(layoutMain)
 windowMain.show()

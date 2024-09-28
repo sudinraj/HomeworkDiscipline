@@ -1,3 +1,7 @@
+# To download the app:
+Download the Dist folder, the exe for the app is in there.\
+You will need both the .exe file, and the .json file.
+
 # Purpose:
 The purpose of mom is to monitor your gaming and/or YouTube activity while you are Studying.
 Before studying turn on mom, and mom will monitor if you open a game and/or YouTube.
@@ -5,10 +9,8 @@ If mom detects that you are playing a game or watching YouTube, she will not be 
 She will send a popup telling you to get back to work. If you decide to disobey and keep playing,
 she will keep sending popups until you stop.
 
-# To run the App:
-Download the Dist folder and run the exe
-
 ## Navigating the App:
+- Run the exe file.
 - Press the "Click to monitor games." button to make the app only monitor if you are playing games.
 - Press the "Click to monitor games." button to make the app monitor if you are playing games or watching YouTube.
 - Press the "Click to add games for mom to detect." button to add games that will be detected by the app.
